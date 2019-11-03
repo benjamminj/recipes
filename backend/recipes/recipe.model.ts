@@ -12,6 +12,10 @@ class Recipe extends Model {
       properties: {
         id: { type: 'string' },
         name: { type: 'string', minLength: 1, maxLength: 255 },
+        // Time in minutes to prep
+        prepTime: { type: 'number' },
+        // Time in minutes to cook
+        cookTime: { type: 'number' },
       },
     }
   }

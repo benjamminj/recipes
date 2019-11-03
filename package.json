@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "migrate:up": "yarn knex migrate:up",
+    "migrate:down": "yarn knex migrate:down"
   },
   "prettier": {
     "semi": false,

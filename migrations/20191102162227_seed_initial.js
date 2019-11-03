@@ -8,6 +8,10 @@ exports.up = async function(knex) {
       .primary()
       .defaultTo(knex.raw('uuid_generate_v4()'))
     table.string('name')
+    table.integer('prepTime')
+    table.integer('cookTime')
+    // TODO: directions relationship
+    // TODO: ingredients relationship
   })
 }
 
