@@ -1,6 +1,6 @@
 import Knex from 'knex'
 import connection from '../../../knexfile'
-import Recipe from '../../../backend/recipes/recipe.model'
+import { Recipe } from '../../../backend/models/recipe.model'
 import { Model } from 'objection'
 import { createControllerFunction } from '../../../backend/createControllerFunction'
 
