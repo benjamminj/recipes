@@ -5,6 +5,7 @@ import { Recipe } from '../../../../backend/models/recipe.model'
 import { createControllerFunction } from '../../../../backend/createControllerFunction'
 import { Ingredient } from '../../../../backend/models/ingredient.model'
 import * as recipesService from '../../../../backend/services/recipe.service'
+import { ingredientsService } from '../../../../backend/services/ingredient.service'
 
 let ingredientByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
@@ -14,17 +15,19 @@ let ingredientByIdController = createControllerFunction(async (req, res) => {
 
   switch (method) {
     case 'GET': {
-      let query = Ingredient.query().where('recipeId', req.query.id)
-
-      let ingredientsList = await query
+      let ingredientsList = await ingredientsService.getAllIngredients(
+        req.query.id
+      )
 
       res.status(200).json({ data: ingredientsList })
       break
     }
     case 'POST': {
-      let newIngredient = await Ingredient.query()
-        .insert({ ...req.body, recipeId: req.query.id })
-        .returning('*')
+      let newIngredient = await ingredientsService.createIngredient({
+        ...req.body,
+        recipeId: req.query.id,
+      })
+
       res.status(201).json({ data: newIngredient })
       break
     }

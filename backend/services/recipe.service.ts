@@ -12,7 +12,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
 /**
  * Retrieve an individual recipe by the recipe id
  */
-export async function getOneRecipeById(id: string): Promise<Recipe> {
+export async function getOneRecipe(id: string): Promise<Recipe> {
   let result = await Recipe.query()
     .findById(id)
     .throwIfNotFound()
@@ -39,4 +39,11 @@ export async function deleteRecipe(recipeId): Promise<Recipe> {
 
   // @ts-ignore
   return result as Recipe
+}
+
+export let recipesService = {
+  getAllRecipes,
+  getOneRecipeById,
+  createRecipe,
+  deleteRecipe,
 }
