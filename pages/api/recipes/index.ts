@@ -13,7 +13,10 @@ const recipesController = createControllerFunction(async (req, res) => {
 
   switch (method) {
     case 'GET': {
-      let recipesList = await Recipe.query()
+      let query = Recipe.query()
+
+      let recipesList = await query
+
       res.status(200).json({ data: recipesList })
       break
     }

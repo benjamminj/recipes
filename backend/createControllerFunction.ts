@@ -10,9 +10,12 @@ export function createControllerFunction(cb) {
     try {
       await cb(req, res)
     } catch (error) {
+      console.error(error)
       // If there was a validation error from the model, return the validation error.
       if (error.statusCode) {
-        res.status(error.statusCode).json({ error: error.data })
+        res
+          .status(error.statusCode)
+          .json({ name: error.name, error: error.data })
       } else {
         // Otherwise internal server error
         res.status(500).json({ error: 'Internal server error' })

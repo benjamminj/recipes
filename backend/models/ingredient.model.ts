@@ -9,7 +9,9 @@ export class Ingredient extends Model {
       type: 'object',
       required: ['name'],
       properties: {
+        // TODO: utilities for base entity keys?
         id: { type: 'string' },
+        recipeId: { type: 'string' },
         created_at: { type: 'string' },
         updated_at: { type: 'string' },
         name: { type: 'string' },
@@ -25,7 +27,7 @@ export class Ingredient extends Model {
       relation: Model.BelongsToOneRelation,
       modelClass: require('./recipe.model').Model,
       join: {
-        from: 'ingredients.ownerId',
+        from: 'ingredients.recipeId',
         to: 'recipes.id',
       },
     },

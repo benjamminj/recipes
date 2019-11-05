@@ -1,16 +1,16 @@
 import Knex from 'knex'
-import connection from '../../../knexfile'
-import { Recipe } from '../../../backend/models/recipe.model'
+import connection from '../../../../knexfile'
+import { Recipe } from '../../../../backend/models/recipe.model'
 import { Model } from 'objection'
-import { createControllerFunction } from '../../../backend/createControllerFunction'
+import { createControllerFunction } from '../../../../backend/createControllerFunction'
 
 // TODO: generic fn for setting up these connections?
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
 
 // TODO: generic controller higher-order fn w/ error handling.
-const recipeByIdController = createControllerFunction(async (req, res) => {
-  const { method } = req
+let recipeByIdController = createControllerFunction(async (req, res) => {
+  let { method } = req
 
   switch (method) {
     case 'DELETE': {

@@ -20,11 +20,16 @@ exports.up = async function(knex) {
       .defaultTo(knex.raw('uuid_generate_v4()'))
     table.timestamps(true, true)
     table.string('name')
+
     table.uuid('recipeId')
     table
       .foreign('recipeId')
       .references('id')
       .inTable('recipes')
+
+    table.integer('quantity')
+    table.string('unit')
+    table.string('notes')
   })
 
   return

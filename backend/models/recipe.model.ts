@@ -22,12 +22,12 @@ export class Recipe extends Model {
   }
 
   static relationMappings = {
-    directions: {
+    ingredients: {
       relation: Model.HasManyRelation,
       modelClass: Ingredient,
       join: {
         from: 'recipes.id',
-        to: 'ingredients.ownerId',
+        to: 'ingredients.recipeId',
       },
     },
   }
