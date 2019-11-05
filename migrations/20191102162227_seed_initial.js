@@ -26,6 +26,7 @@ exports.up = async function(knex) {
       .foreign('recipeId')
       .references('id')
       .inTable('recipes')
+      .onDelete('CASCADE')
 
     table.integer('quantity')
     table.string('unit')

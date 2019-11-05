@@ -3,10 +3,13 @@ import connection from '../../../../knexfile'
 import { Recipe } from '../../../../backend/models/recipe.model'
 import { Model } from 'objection'
 import { createControllerFunction } from '../../../../backend/createControllerFunction'
+import { createRecipesService } from '../../../../backend/services/recipe.service'
 
 // TODO: generic fn for setting up these connections?
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
+
+const recipesService = createRecipesService()
 
 // TODO: generic controller higher-order fn w/ error handling.
 let recipeByIdController = createControllerFunction(async (req, res) => {
@@ -15,9 +18,7 @@ let recipeByIdController = createControllerFunction(async (req, res) => {
   switch (method) {
     case 'DELETE': {
       let { id } = req.query
-      let deletedRecipe = await Recipe.query()
-        .deleteById(id)
-        .returning('*')
+      let deletedRecipe = await recipesService.deleteRecipe(id)
 
       // if no recipes were returned from the DELETE operation, throw a 404.
       if (deletedRecipe === undefined) {
@@ -34,6 +35,7 @@ let recipeByIdController = createControllerFunction(async (req, res) => {
       res.status(200).json({ data: deletedRecipe })
       break
     }
+    // TODO: PATCH recipe
     default:
       res.setHeader('Allow', ['DELETE'])
       res.status(405).end(`Method ${method} Not Allowed`)
