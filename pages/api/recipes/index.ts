@@ -3,13 +3,11 @@ import connection from '../../../knexfile'
 import { Recipe } from '../../../backend/models/recipe.model'
 import { Model } from 'objection'
 import { createControllerFunction } from '../../../backend/createControllerFunction'
-import { createRecipesService } from '../../../backend/services/recipe.service'
+import * as recipesService from '../../../backend/services/recipe.service'
 
 // TODO: generic fn for setting up these connections?
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
-
-let recipesService = createRecipesService()
 
 const recipesController = createControllerFunction(async (req, res) => {
   const { method } = req

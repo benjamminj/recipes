@@ -1,30 +1,42 @@
 import { Recipe } from '../models/recipe.model'
 import { QueryBuilderYieldingOne, QueryBuilder } from 'objection'
 
-export function createRecipesService() {
-  /**
-   * Retrieves all recipes in the DB.
-   */
-  function getAllRecipes() {
-    return Recipe.query()
-  }
+/**
+ * Retrieves all recipes
+ */
+export async function getAllRecipes(): Promise<Recipe[]> {
+  let result = await Recipe.query()
+  return result
+}
 
-  function createRecipe(recipe) {
-    return Recipe.query().insertAndFetch(recipe)
-  }
+/**
+ * Retrieve an individual recipe by the recipe id
+ */
+export async function getOneRecipeById(id: string): Promise<Recipe> {
+  let result = await Recipe.query()
+    .findById(id)
+    .throwIfNotFound()
 
-  function deleteRecipe(recipeId) {
-    return Recipe.query()
-      .deleteById(recipeId)
-      .throwIfNotFound()
-      .returning('*')
-  }
+  return result
+}
 
-  // TODO: update recipe by id.
+/**
+ * Creates a new recipe record
+ */
+export async function createRecipe(recipe): Promise<Recipe> {
+  let result = await Recipe.query().insertAndFetch(recipe)
+  return result
+}
 
-  return {
-    getAllRecipes,
-    createRecipe,
-    deleteRecipe,
-  }
+/**
+ * Deletes the recipe with the given id
+ */
+export async function deleteRecipe(recipeId): Promise<Recipe> {
+  let result = await Recipe.query()
+    .deleteById(recipeId)
+    .throwIfNotFound()
+    .returning('*')
+
+  // @ts-ignore
+  return result as Recipe
 }
