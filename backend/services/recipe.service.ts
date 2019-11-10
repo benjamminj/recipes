@@ -43,7 +43,7 @@ export async function deleteRecipe(recipeId): Promise<Recipe> {
 
 export let recipesService = {
   getAllRecipes,
-  getOneRecipeById,
+  getOneRecipe,
   createRecipe,
   deleteRecipe,
 }

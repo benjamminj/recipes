@@ -11,7 +11,7 @@ let ingredientByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
 
   // Throw an error if the related recipe doesn't exist
-  await recipesService.getOneRecipeById(req.query.id)
+  await recipesService.getOneRecipe(req.query.id)
 
   switch (method) {
     case 'GET': {
