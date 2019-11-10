@@ -1,11 +1,11 @@
 import Knex from 'knex'
-import connection from '../../../../knexfile'
+import connection from '../../../../../knexfile'
 import { Model } from 'objection'
-import { Recipe } from '../../../../backend/models/recipe.model'
-import { createControllerFunction } from '../../../../backend/createControllerFunction'
-import { Ingredient } from '../../../../backend/models/ingredient.model'
-import * as recipesService from '../../../../backend/services/recipe.service'
-import { ingredientsService } from '../../../../backend/services/ingredient.service'
+import { Recipe } from '../../../../../backend/models/recipe.model'
+import { createControllerFunction } from '../../../../../backend/createControllerFunction'
+import { Ingredient } from '../../../../../backend/models/ingredient.model'
+import { recipesService } from '../../../../../backend/services/recipe.service'
+import { ingredientsService } from '../../../../../backend/services/ingredient.service'
 
 let ingredientByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
