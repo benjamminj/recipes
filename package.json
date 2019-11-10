@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "echo \"no tests yet, don't worry they'll come\"",
     "migrate:up": "yarn knex migrate:up",
     "migrate:down": "yarn knex migrate:down"
   },
