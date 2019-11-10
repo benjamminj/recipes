@@ -1,8 +1,8 @@
 require('dotenv').config()
 
-let pg = require('pg')
-// TODO: can we remove or enable?
-// pg.defaults.ssl = true
+// let pg = require('pg')/
+// TODO: can we remove or senable?
+pg.defaults.ssl = process.env.NODE_ENV === 'production'
 
 module.exports = {
   client: 'pg',
