@@ -29,6 +29,14 @@ export async function createRecipe(recipe): Promise<Recipe> {
 }
 
 /**
+ * Update an individual recipe
+ */
+export async function updateRecipe(recipeId, update): Promise<Recipe> {
+  let result = await Recipe.query().patchAndFetchById(recipeId, update)
+  return result
+}
+
+/**
  * Deletes the recipe with the given id
  */
 export async function deleteRecipe(recipeId): Promise<Recipe> {

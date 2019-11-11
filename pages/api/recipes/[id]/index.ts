@@ -19,6 +19,12 @@ let recipeByIdController = createControllerFunction(async (req, res) => {
       res.status(200).json({ data: recipe })
       break
     }
+    case 'PATCH': {
+      let update = req.body
+      let updatedRecipe = await recipesService.updateRecipe(id, update)
+      res.status(200).json({ data: updatedRecipe })
+      break
+    }
     case 'DELETE': {
       let deletedRecipe = await recipesService.deleteRecipe(id)
 
@@ -37,7 +43,6 @@ let recipeByIdController = createControllerFunction(async (req, res) => {
       res.status(200).json({ data: deletedRecipe })
       break
     }
-    // TODO: PATCH recipe
     default:
       res.setHeader('Allow', ['DELETE'])
       res.status(405).end(`Method ${method} Not Allowed`)

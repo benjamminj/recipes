@@ -45,17 +45,37 @@ context('API', () => {
       expect(response.status).equals(200)
       expect(response.body.data).lengthOf(1)
 
-      let items = response.body.data
-      let [addedItem] = items
-      expect(addedItem.name).equals('chicken soup')
+      cy.wrap(response.body.data).as('recipes')
+    })
 
+    cy.get('@recipes').then(recipes => {
+      let [addedItem] = recipes
+
+      expect(addedItem.name).equals('chicken soup')
+    })
+
+    cy.get('@recipes').then(recipes => {
+      let [addedItem] = recipes
+      let update = {
+        name: 'TEST',
+      }
+
+      cy.request('PATCH', `/api/recipes/${addedItem.id}`, update).then(
+        response => {
+          expect(response.status).equals(200)
+          expect(response.body.data.name).equals('TEST')
+        }
+      )
+    })
+
+    cy.get('@recipes').then(recipes => {
       // Delete all items in the list
-      cy.wrap(items).each(item => {
+      cy.wrap(recipes).each(item => {
         cy.request('DELETE', `/api/recipes/${item.id}`).then(deleteResponse => {
           expect(deleteResponse.status).equals(200)
 
           let deletedItem = deleteResponse.body.data
-          expect(deletedItem.name).equals('chicken soup')
+          expect(deletedItem.name).equals('TEST')
         })
       })
     })
