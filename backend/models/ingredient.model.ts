@@ -9,7 +9,6 @@ export class Ingredient extends Model {
       type: 'object',
       required: ['name'],
       properties: {
-        // TODO: utilities for base entity keys?
         id: { type: 'string' },
         recipeId: { type: 'string' },
         created_at: { type: 'string' },

@@ -5,11 +5,9 @@ import { Model } from 'objection'
 import { createControllerFunction } from '../../../../backend/createControllerFunction'
 import * as recipesService from '../../../../backend/services/recipe.service'
 
-// TODO: generic fn for setting up these connections?
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
 
-// TODO: generic controller higher-order fn w/ error handling.
 let recipeByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
 

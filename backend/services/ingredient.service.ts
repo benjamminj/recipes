@@ -22,7 +22,23 @@ export async function createIngredient(ingredient): Promise<Ingredient> {
   return result as Ingredient
 }
 
+/**
+ * Deletes an ingredient with the given id.
+ */
+export async function deleteIngredient(
+  ingredientId: string
+): Promise<Ingredient> {
+  let result = await Ingredient.query()
+    .deleteById(ingredientId)
+    .throwIfNotFound()
+    .returning('*')
+
+  // @ts-ignore
+  return result
+}
+
 export let ingredientsService = {
   getAllIngredients,
   createIngredient,
+  deleteIngredient,
 }
