@@ -4,15 +4,12 @@ context('API', () => {
   beforeEach(() => {
     cy.visit('/')
 
-    // Note: would be better if we set this up to use an endpoint
-    // that seeds all of the data / cleans the test DB rather than
-    // an API request and a loop.
     cy.request('/api/recipes').then(response => {
       let recipes = response.body.data
 
-      for (let recipe of recipes) {
+      cy.wrap(recipes).each(recipe => {
         cy.request('DELETE', `/api/recipes/${recipe.id}`)
-      }
+      })
     })
   })
 

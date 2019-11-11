@@ -13,7 +13,7 @@ Model.knex(knex)
 let ingredientsController = createControllerFunction(async (req, res) => {
   const { method } = req
 
-  // Validate that the user exists before moving on to the rest of the controller.
+  // Validate that the recipe exists before moving on to the rest of the controller.
   await recipesService.getOneRecipe(req.query.id)
 
   switch (method) {
