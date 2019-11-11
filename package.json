@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^12.12.5",
     "@types/react": "^16.9.11",
+    "babel-plugin-module-resolver": "^3.2.0",
     "cypress": "^3.6.0",
     "now": "^16.4.4",
     "typescript": "^3.6.4"
