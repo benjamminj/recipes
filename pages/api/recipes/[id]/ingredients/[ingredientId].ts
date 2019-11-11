@@ -2,7 +2,7 @@ import Knex from 'knex'
 import connection from '~/knexfile'
 import { Model } from 'objection'
 import { createControllerFunction } from '~/backend/createControllerFunction'
-import { recipesService } from '~/backend/services/recipe.service'
+import * as recipesService from '~/backend/services/recipe.service'
 import * as ingredientsService from '~/backend/services/ingredient.service'
 
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
@@ -22,6 +22,15 @@ let ingredientByIdController = createControllerFunction(async (req, res) => {
       res.status(200).json({ data: ingredient })
       break
     }
+    case 'PATCH': {
+      let updatedIngredient = await ingredientsService.updateIngredient(
+        ingredientId,
+        req.body
+      )
+
+      res.status(200).json({ data: updatedIngredient })
+      break
+    }
     case 'DELETE': {
       let deletedIngredient = await ingredientsService.deleteIngredient(
         ingredientId
@@ -30,7 +39,6 @@ let ingredientByIdController = createControllerFunction(async (req, res) => {
       res.status(200).json({ data: deletedIngredient })
       break
     }
-    // TODO: PATCH
     default:
       res.setHeader('Allow', ['DELETE'])
       res.status(405).end(`Method ${method} Not Allowed`)

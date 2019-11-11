@@ -125,6 +125,27 @@ context('API', () => {
         cy.wrap(response.body.data).as('addedIngredients')
       })
 
+      cy.get('@addedIngredients').then(ingredientsList => {
+        let [first] = ingredientsList
+        let ingredientUrl = `${url}/${first.id}`
+        let update = { name: 'Baconz' }
+
+        // PATCH the ingredient name.
+        cy.request('PATCH', ingredientUrl, update).then(response => {
+          expect(response.status).equals(200)
+          expect(response.body.data.name).equals('Baconz')
+        })
+
+        // Perform a second PATCH to make sure we have clean data before performing
+        // other assertions.
+        cy.request('PATCH', ingredientUrl, { name: first.name }).then(
+          response => {
+            expect(response.status).equals(200)
+            expect(response.body.data.name).equals(first.name)
+          }
+        )
+      })
+
       cy.get('@addedIngredients').each(ingredient => {
         let ingredientUrl = [url, ingredient.id].join('/')
 
