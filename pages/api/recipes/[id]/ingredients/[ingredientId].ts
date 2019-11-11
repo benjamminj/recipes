@@ -12,7 +12,6 @@ Model.knex(knex)
 let ingredientByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
 
-  console.log('YOU ARE HERE')
   // Throw an error if the related recipe doesn't exist
   await recipesService.getOneRecipe(req.query.id)
 
