@@ -11,6 +11,17 @@ export async function getAllIngredients(
 }
 
 /**
+ * Get an individual ingredient by id
+ */
+export async function getOneIngredient(id: string): Promise<Ingredient> {
+  let result = await Ingredient.query()
+    .findById(id)
+    .throwIfNotFound()
+
+  return result
+}
+
+/**
  * Creates a new ingredient.
  */
 export async function createIngredient(ingredient): Promise<Ingredient> {
@@ -39,6 +50,7 @@ export async function deleteIngredient(
 
 export let ingredientsService = {
   getAllIngredients,
+  getOneIngredient,
   createIngredient,
   deleteIngredient,
 }

@@ -28,7 +28,7 @@ context('API', () => {
     }).then(response => {
       expect(response.status).equals(201)
 
-      const addedRecipeId = response.body.data.id
+      let addedRecipeId = response.body.data.id
       cy.wrap(addedRecipeId).as('addedRecipeId')
     })
 
@@ -63,7 +63,6 @@ context('API', () => {
 
   it('recipe ingredients CRUD endpoints', () => {
     cy.request('POST', '/api/recipes', { name: 'BLT' }).then(response => {
-      console.log(response)
       cy.wrap(response.body.data.id).as('addedRecipeId')
     })
 
@@ -87,7 +86,15 @@ context('API', () => {
       cy.wrap(ingredients).each(ingredient => {
         cy.request('POST', url, ingredient).then(response => {
           expect(response.status).equals(201)
-          expect(response.body.data.name).equals(ingredient.name)
+
+          let addedIngredient = response.body.data
+          expect(addedIngredient.name).equals(ingredient.name)
+
+          // Check the GET ONE endpoint for the newly added ingredient
+          cy.request(`${url}/${addedIngredient.id}`).then(response => {
+            expect(response.status).equals(200)
+            expect(response.body.data.name).equals(addedIngredient.name)
+          })
         })
       })
 

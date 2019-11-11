@@ -3,7 +3,7 @@ import connection from '~/knexfile'
 import { Model } from 'objection'
 import { createControllerFunction } from '~/backend/createControllerFunction'
 import { recipesService } from '~/backend/services/recipe.service'
-import { ingredientsService } from '~/backend/services/ingredient.service'
+import * as ingredientsService from '~/backend/services/ingredient.service'
 
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
@@ -14,10 +14,17 @@ let ingredientByIdController = createControllerFunction(async (req, res) => {
   // Throw an error if the related recipe doesn't exist
   await recipesService.getOneRecipe(req.query.id)
 
+  let { ingredientId } = req.query
+
   switch (method) {
+    case 'GET': {
+      let ingredient = await ingredientsService.getOneIngredient(ingredientId)
+      res.status(200).json({ data: ingredient })
+      break
+    }
     case 'DELETE': {
       let deletedIngredient = await ingredientsService.deleteIngredient(
-        req.query.ingredientId
+        ingredientId
       )
 
       res.status(200).json({ data: deletedIngredient })
