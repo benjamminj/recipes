@@ -7,8 +7,6 @@ context('API', () => {
     // Note: would be better if we set this up to use an endpoint
     // that seeds all of the data / cleans the test DB rather than
     // an API request and a loop.
-    // TODO: make a new ticket in ClickUp to use a seeder / cypress
-    // system commands
     cy.request('/api/recipes').then(response => {
       let recipes = response.body.data
 

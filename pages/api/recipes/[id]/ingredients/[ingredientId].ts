@@ -5,7 +5,6 @@ import { createControllerFunction } from '../../../../../backend/createControlle
 import { recipesService } from '../../../../../backend/services/recipe.service'
 import { ingredientsService } from '../../../../../backend/services/ingredient.service'
 
-// TODO: generic fn for setting up these connections?
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
 

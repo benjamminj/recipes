@@ -13,8 +13,6 @@ Model.knex(knex)
 let ingredientsController = createControllerFunction(async (req, res) => {
   const { method } = req
 
-  // TODO: is there a better way to do this? Perhaps embedded in the query? or by
-  // going thru the "Recipe" model?
   // Validate that the user exists before moving on to the rest of the controller.
   await recipesService.getOneRecipe(req.query.id)
 
