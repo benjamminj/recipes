@@ -1,11 +1,11 @@
 import Knex from 'knex'
-import connection from '../../../../knexfile'
+import connection from '../../../../../knexfile'
 import { Model } from 'objection'
-import { Recipe } from '../../../../backend/models/recipe.model'
-import { createControllerFunction } from '../../../../backend/createControllerFunction'
-import { Ingredient } from '../../../../backend/models/ingredient.model'
-import * as recipesService from '../../../../backend/services/recipe.service'
-import * as ingredientsService from '../../../../backend/services/ingredient.service'
+import { Recipe } from '../../../../../backend/models/recipe.model'
+import { createControllerFunction } from '../../../../../backend/createControllerFunction'
+import { Ingredient } from '../../../../../backend/models/ingredient.model'
+import * as recipesService from '../../../../../backend/services/recipe.service'
+import * as ingredientsService from '../../../../../backend/services/ingredient.service'
 
 let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
