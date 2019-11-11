@@ -10,10 +10,16 @@ Model.knex(knex)
 
 let recipeByIdController = createControllerFunction(async (req, res) => {
   let { method } = req
+  let { id } = req.query
 
   switch (method) {
+    case 'GET': {
+      let recipe = await recipesService.getOneRecipe(id)
+
+      res.status(200).json({ data: recipe })
+      break
+    }
     case 'DELETE': {
-      let { id } = req.query
       let deletedRecipe = await recipesService.deleteRecipe(id)
 
       // if no recipes were returned from the DELETE operation, throw a 404.

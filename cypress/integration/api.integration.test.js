@@ -27,6 +27,17 @@ context('API', () => {
       name: 'chicken soup',
     }).then(response => {
       expect(response.status).equals(201)
+
+      const addedRecipeId = response.body.data.id
+      cy.wrap(addedRecipeId).as('addedRecipeId')
+    })
+
+    // Get the newly added recipe
+    cy.get('@addedRecipeId').then(id => {
+      cy.request(`/api/recipes/${id}`).then(response => {
+        expect(response.status).equals(200)
+        expect(response.body.data).to.haveOwnProperty('name', 'chicken soup')
+      })
     })
 
     // GET all recipes again, make sure that the new recipe is there.
@@ -89,6 +100,8 @@ context('API', () => {
 
       cy.get('@addedIngredients').each(ingredient => {
         let ingredientUrl = [url, ingredient.id].join('/')
+
+        // For each added ingredient, delete it.
         cy.request('DELETE', ingredientUrl).then(response => {
           expect(response.status).equals(200)
           expect(response.body.data.name).equals(ingredient.name)
