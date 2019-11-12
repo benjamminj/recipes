@@ -27,6 +27,17 @@ context('API', () => {
       name: 'chicken soup',
     }).then(response => {
       expect(response.status).equals(201)
+
+      let addedRecipeId = response.body.data.id
+      cy.wrap(addedRecipeId).as('addedRecipeId')
+    })
+
+    // Get the newly added recipe
+    cy.get('@addedRecipeId').then(id => {
+      cy.request(`/api/recipes/${id}`).then(response => {
+        expect(response.status).equals(200)
+        expect(response.body.data).to.haveOwnProperty('name', 'chicken soup')
+      })
     })
 
     // GET all recipes again, make sure that the new recipe is there.
@@ -34,17 +45,37 @@ context('API', () => {
       expect(response.status).equals(200)
       expect(response.body.data).lengthOf(1)
 
-      let items = response.body.data
-      let [addedItem] = items
-      expect(addedItem.name).equals('chicken soup')
+      cy.wrap(response.body.data).as('recipes')
+    })
 
+    cy.get('@recipes').then(recipes => {
+      let [addedItem] = recipes
+
+      expect(addedItem.name).equals('chicken soup')
+    })
+
+    cy.get('@recipes').then(recipes => {
+      let [addedItem] = recipes
+      let update = {
+        name: 'TEST',
+      }
+
+      cy.request('PATCH', `/api/recipes/${addedItem.id}`, update).then(
+        response => {
+          expect(response.status).equals(200)
+          expect(response.body.data.name).equals('TEST')
+        }
+      )
+    })
+
+    cy.get('@recipes').then(recipes => {
       // Delete all items in the list
-      cy.wrap(items).each(item => {
+      cy.wrap(recipes).each(item => {
         cy.request('DELETE', `/api/recipes/${item.id}`).then(deleteResponse => {
           expect(deleteResponse.status).equals(200)
 
           let deletedItem = deleteResponse.body.data
-          expect(deletedItem.name).equals('chicken soup')
+          expect(deletedItem.name).equals('TEST')
         })
       })
     })
@@ -52,7 +83,6 @@ context('API', () => {
 
   it('recipe ingredients CRUD endpoints', () => {
     cy.request('POST', '/api/recipes', { name: 'BLT' }).then(response => {
-      console.log(response)
       cy.wrap(response.body.data.id).as('addedRecipeId')
     })
 
@@ -76,7 +106,15 @@ context('API', () => {
       cy.wrap(ingredients).each(ingredient => {
         cy.request('POST', url, ingredient).then(response => {
           expect(response.status).equals(201)
-          expect(response.body.data.name).equals(ingredient.name)
+
+          let addedIngredient = response.body.data
+          expect(addedIngredient.name).equals(ingredient.name)
+
+          // Check the GET ONE endpoint for the newly added ingredient
+          cy.request(`${url}/${addedIngredient.id}`).then(response => {
+            expect(response.status).equals(200)
+            expect(response.body.data.name).equals(addedIngredient.name)
+          })
         })
       })
 
@@ -87,8 +125,31 @@ context('API', () => {
         cy.wrap(response.body.data).as('addedIngredients')
       })
 
+      cy.get('@addedIngredients').then(ingredientsList => {
+        let [first] = ingredientsList
+        let ingredientUrl = `${url}/${first.id}`
+        let update = { name: 'Baconz' }
+
+        // PATCH the ingredient name.
+        cy.request('PATCH', ingredientUrl, update).then(response => {
+          expect(response.status).equals(200)
+          expect(response.body.data.name).equals('Baconz')
+        })
+
+        // Perform a second PATCH to make sure we have clean data before performing
+        // other assertions.
+        cy.request('PATCH', ingredientUrl, { name: first.name }).then(
+          response => {
+            expect(response.status).equals(200)
+            expect(response.body.data.name).equals(first.name)
+          }
+        )
+      })
+
       cy.get('@addedIngredients').each(ingredient => {
         let ingredientUrl = [url, ingredient.id].join('/')
+
+        // For each added ingredient, delete it.
         cy.request('DELETE', ingredientUrl).then(response => {
           expect(response.status).equals(200)
           expect(response.body.data.name).equals(ingredient.name)

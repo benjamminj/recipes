@@ -11,6 +11,28 @@ export async function getAllIngredients(
 }
 
 /**
+ * Get an individual ingredient by id
+ */
+export async function getOneIngredient(id: string): Promise<Ingredient> {
+  let result = await Ingredient.query()
+    .findById(id)
+    .throwIfNotFound()
+
+  return result
+}
+
+/**
+ * Update an ingredient with the given id.
+ */
+export async function updateIngredient(
+  id: string,
+  update
+): Promise<Ingredient> {
+  let result = await Ingredient.query().patchAndFetchById(id, update)
+  return result
+}
+
+/**
  * Creates a new ingredient.
  */
 export async function createIngredient(ingredient): Promise<Ingredient> {
@@ -35,10 +57,4 @@ export async function deleteIngredient(
 
   // @ts-ignore
   return result
-}
-
-export let ingredientsService = {
-  getAllIngredients,
-  createIngredient,
-  deleteIngredient,
 }
