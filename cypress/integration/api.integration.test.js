@@ -1,17 +1,20 @@
 /// <reference types="cypress" />
 
-context('API', () => {
-  beforeEach(() => {
-    cy.visit('/')
+let cleanup = () => {
+  cy.visit('/')
 
-    cy.request('/api/recipes').then(response => {
-      let recipes = response.body.data
+  cy.request('/api/recipes').then(response => {
+    let recipes = response.body.data
 
-      cy.wrap(recipes).each(recipe => {
-        cy.request('DELETE', `/api/recipes/${recipe.id}`)
-      })
+    cy.wrap(recipes).each(recipe => {
+      cy.request('DELETE', `/api/recipes/${recipe.id}`)
     })
   })
+}
+
+context('API', () => {
+  beforeEach(cleanup)
+  after(cleanup)
 
   it('recipes CRUD endpoints', () => {
     cy.visit('/')
@@ -156,9 +159,5 @@ context('API', () => {
         })
       })
     })
-  })
-
-  it.skip('recipe directions CRUD endpoints', () => {
-    cy.log('TODO:')
   })
 })
