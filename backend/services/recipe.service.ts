@@ -48,10 +48,3 @@ export async function deleteRecipe(recipeId): Promise<Recipe> {
   // @ts-ignore
   return result as Recipe
 }
-
-export let recipesService = {
-  getAllRecipes,
-  getOneRecipe,
-  createRecipe,
-  deleteRecipe,
-}
