@@ -1,4 +1,4 @@
-import { Model } from 'objection'
+import { Model, lit } from 'objection'
 import { Ingredient } from './ingredient.model'
 
 export class Recipe extends Model {
@@ -17,6 +17,12 @@ export class Recipe extends Model {
         prepTime: { type: ['number', 'null'] },
         // Time in minutes to cook
         cookTime: { type: ['number', 'null'] },
+        directions: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
       },
     }
   }

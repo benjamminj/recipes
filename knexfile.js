@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 let pg = require('pg')
-pg.defaults.ssl = true
+pg.defaults.ssl = process.env.NODE_ENV === 'production'
 
 process.env.DATABASE_URL
 

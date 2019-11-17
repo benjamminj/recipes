@@ -25,9 +25,20 @@ context('API', () => {
       expect(response.body.data).lengthOf(0)
     })
 
+    let directions = [
+      'boil water',
+      'take chicken, put it in the pot',
+      'boil chicken',
+      'shred chicken',
+      'throw veggies in pot',
+      'throw bullion in pot',
+      'enjoy',
+    ]
+
     // Add a recipe
     cy.request('POST', '/api/recipes', {
       name: 'chicken soup',
+      directions,
     }).then(response => {
       expect(response.status).equals(201)
 
@@ -40,6 +51,7 @@ context('API', () => {
       cy.request(`/api/recipes/${id}`).then(response => {
         expect(response.status).equals(200)
         expect(response.body.data).to.haveOwnProperty('name', 'chicken soup')
+        expect(response.body.data).to.haveOwnProperty('directions', directions)
       })
     })
 
@@ -61,12 +73,14 @@ context('API', () => {
       let [addedItem] = recipes
       let update = {
         name: 'TEST',
+        directions: [],
       }
 
       cy.request('PATCH', `/api/recipes/${addedItem.id}`, update).then(
         response => {
           expect(response.status).equals(200)
           expect(response.body.data.name).equals('TEST')
+          expect(response.body.data).to.haveOwnProperty('directions', [])
         }
       )
     })

@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "test": "echo \"no tests yet, don't worry they'll come\"",
+    "migrate:make": "yarn knex migrate:make",
     "migrate:up": "yarn knex migrate:up",
     "migrate:down": "yarn knex migrate:down",
+    "e2e": "yarn cypress run",
     "e2e:open": "yarn cypress open"
   },
   "prettier": {
