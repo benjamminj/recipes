@@ -23,7 +23,7 @@ export let largeSpacing = {
 }
 
 export let borderRadius = {
-  s: '0.25rem',
-  m: '0.5rem',
-  l: '1rem',
+  s: '0.5rem',
+  m: '1rem',
+  l: '1.5rem',
 }
