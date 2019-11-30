@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "test": "echo \"no tests yet, don't worry they'll come\"",
+    "migrate:make": "yarn knex migrate:make",
     "migrate:up": "yarn knex migrate:up",
     "migrate:down": "yarn knex migrate:down",
+    "e2e": "yarn cypress run",
     "e2e:open": "yarn cypress open"
   },
   "prettier": {
@@ -17,14 +19,19 @@
     "trailingComma": "es5"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
     "dotenv": "^8.2.0",
+    "emotion": "^10.0.23",
+    "emotion-server": "^10.0.17",
     "knex": "^0.20.1",
     "next": "9.1.2",
     "objection": "^1.6.11",
     "pg": "^7.12.1",
     "prettier": "^1.18.2",
     "react": "16.11.0",
-    "react-dom": "16.11.0"
+    "react-dom": "16.11.0",
+    "react-h-tag": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^12.12.5",
