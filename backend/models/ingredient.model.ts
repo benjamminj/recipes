@@ -14,9 +14,9 @@ export class Ingredient extends Model {
         created_at: { type: 'string' },
         updated_at: { type: 'string' },
         name: { type: 'string' },
-        quantity: { type: 'number', default: 1 },
-        unit: { type: 'string' },
-        notes: { type: 'string' },
+        quantity: { type: ['number', 'null'] },
+        unit: { type: ['string', 'null'] },
+        notes: { type: ['string', 'null'] },
       },
     }
   }
