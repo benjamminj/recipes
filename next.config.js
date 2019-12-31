@@ -1,12 +1,13 @@
 const withOffline = require('next-offline')
 
 const nextConfig = {
-  // target: 'serverless',
-  // add the homepage to the cache
-  transformManifest: manifest => ['/'].concat(manifest),
-  // Trying to set NODE_ENV=production when running yarn dev causes a build-time error so we
-  // turn on the SW in dev mode so that we can actually test it
-  generateInDevMode: true,
+  // Add the homepage to the cache
+  transformManifest: manifest =>
+    ['/'].concat(Array.isArray(manifest) ? manifest : []),
+  // Right now trying to generate in dev mode throws errors...I'm not sure exactly
+  // what the issue is but since I have preview apps set up for this it's probably
+  // ok to just rely on testing service workers in a demo environment for now.
+  generateInDevMode: false,
   workboxOpts: {
     swDest: 'static/service-worker.js',
     runtimeCaching: [
