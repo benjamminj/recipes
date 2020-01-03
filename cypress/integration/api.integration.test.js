@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
-let cleanup = () => {
+const cleanup = () => {
   cy.visit('/')
 
   cy.request('/api/recipes').then(response => {
-    let recipes = response.body.data
+    const recipes = response.body.data
 
     cy.wrap(recipes).each(recipe => {
       cy.request('DELETE', `/api/recipes/${recipe.id}`)
@@ -25,7 +25,7 @@ context('API', () => {
       expect(response.body.data).lengthOf(0)
     })
 
-    let directions = [
+    const directions = [
       'boil water',
       'take chicken, put it in the pot',
       'boil chicken',
@@ -42,7 +42,7 @@ context('API', () => {
     }).then(response => {
       expect(response.status).equals(201)
 
-      let addedRecipeId = response.body.data.id
+      const addedRecipeId = response.body.data.id
       cy.wrap(addedRecipeId).as('addedRecipeId')
     })
 
@@ -64,14 +64,14 @@ context('API', () => {
     })
 
     cy.get('@recipes').then(recipes => {
-      let [addedItem] = recipes
+      const [addedItem] = recipes
 
       expect(addedItem.name).equals('chicken soup')
     })
 
     cy.get('@recipes').then(recipes => {
-      let [addedItem] = recipes
-      let update = {
+      const [addedItem] = recipes
+      const update = {
         name: 'TEST',
         directions: [],
       }
@@ -91,7 +91,7 @@ context('API', () => {
         cy.request('DELETE', `/api/recipes/${item.id}`).then(deleteResponse => {
           expect(deleteResponse.status).equals(200)
 
-          let deletedItem = deleteResponse.body.data
+          const deletedItem = deleteResponse.body.data
           expect(deletedItem.name).equals('TEST')
         })
       })
@@ -105,14 +105,14 @@ context('API', () => {
 
     // Fetch ingredients, should always be empty to start
     cy.get('@addedRecipeId').then(id => {
-      let url = `/api/recipes/${id}/ingredients`
+      const url = `/api/recipes/${id}/ingredients`
 
       cy.request(url).then(response => {
         expect(response.status).equals(200)
         expect(response.body.data).to.have.length(0)
       })
 
-      let ingredients = [
+      const ingredients = [
         { name: 'Bacon' },
         { name: 'Lettuce' },
         { name: 'Tomato' },
@@ -124,7 +124,7 @@ context('API', () => {
         cy.request('POST', url, ingredient).then(response => {
           expect(response.status).equals(201)
 
-          let addedIngredient = response.body.data
+          const addedIngredient = response.body.data
           expect(addedIngredient.name).equals(ingredient.name)
 
           // Check the GET ONE endpoint for the newly added ingredient
@@ -143,9 +143,9 @@ context('API', () => {
       })
 
       cy.get('@addedIngredients').then(ingredientsList => {
-        let [first] = ingredientsList
-        let ingredientUrl = `${url}/${first.id}`
-        let update = { name: 'Baconz' }
+        const [first] = ingredientsList
+        const ingredientUrl = `${url}/${first.id}`
+        const update = { name: 'Baconz' }
 
         // PATCH the ingredient name.
         cy.request('PATCH', ingredientUrl, update).then(response => {
@@ -164,7 +164,7 @@ context('API', () => {
       })
 
       cy.get('@addedIngredients').each(ingredient => {
-        let ingredientUrl = [url, ingredient.id].join('/')
+        const ingredientUrl = [url, ingredient.id].join('/')
 
         // For each added ingredient, delete it.
         cy.request('DELETE', ingredientUrl).then(response => {

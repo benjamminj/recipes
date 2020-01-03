@@ -5,7 +5,7 @@ import { Model } from 'objection'
 import { createControllerFunction } from '~/backend/createControllerFunction'
 import * as recipesService from '~/backend/services/recipe.service'
 
-let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
+const knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
 
 const recipesController = createControllerFunction(async (req, res) => {
@@ -13,13 +13,13 @@ const recipesController = createControllerFunction(async (req, res) => {
 
   switch (method) {
     case 'GET': {
-      let recipesList = await recipesService.getAllRecipes()
+      const recipesList = await recipesService.getAllRecipes()
 
       res.status(200).json({ data: recipesList })
       break
     }
     case 'POST': {
-      let newRecipe = await recipesService.createRecipe(req.body)
+      const newRecipe = await recipesService.createRecipe(req.body)
       res.status(201).json({ data: newRecipe })
       break
     }

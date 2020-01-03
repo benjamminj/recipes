@@ -1,7 +1,7 @@
-export let primaryFont =
+export const primaryFont =
   'font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif'
 
-export let fontSizes = {
+export const fontSizes = {
   h1: '4.5rem',
   h2: '3.75rem',
   h3: '3rem',

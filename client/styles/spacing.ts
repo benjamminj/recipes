@@ -1,6 +1,6 @@
-export let remPx = '16px'
+export const remPx = '16px'
 
-export let spacing = {
+export const spacing = {
   xxxs: '0.25rem',
   xxs: '0.5rem',
   xs: '0.75rem',
@@ -12,7 +12,7 @@ export let spacing = {
   xxxl: '6rem',
 }
 
-export let largeSpacing = {
+export const largeSpacing = {
   xs: '8rem',
   s: '12rem',
   m: '16rem',
@@ -22,7 +22,7 @@ export let largeSpacing = {
   xxxl: '48rem',
 }
 
-export let borderRadius = {
+export const borderRadius = {
   s: '0.5rem',
   m: '1rem',
   l: '1.5rem',

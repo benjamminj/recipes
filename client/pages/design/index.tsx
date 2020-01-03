@@ -4,7 +4,7 @@ import { ColorSection } from './components/ColorSection'
 import { TypographySection } from './components/TypographySection'
 /** @jsx jsx */ jsx
 
-export let DesignPage = () => {
+export const DesignPage = () => {
   return (
     <div
       css={css`

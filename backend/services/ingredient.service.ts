@@ -6,7 +6,7 @@ import { Ingredient } from '../models/ingredient.model'
 export async function getAllIngredients(
   recipeId: string
 ): Promise<Ingredient[]> {
-  let result = await Ingredient.query().where('recipeId', recipeId)
+  const result = await Ingredient.query().where('recipeId', recipeId)
   return result
 }
 
@@ -14,7 +14,7 @@ export async function getAllIngredients(
  * Get an individual ingredient by id
  */
 export async function getOneIngredient(id: string): Promise<Ingredient> {
-  let result = await Ingredient.query()
+  const result = await Ingredient.query()
     .findById(id)
     .throwIfNotFound()
 
@@ -28,7 +28,7 @@ export async function updateIngredient(
   id: string,
   update
 ): Promise<Ingredient> {
-  let result = await Ingredient.query().patchAndFetchById(id, update)
+  const result = await Ingredient.query().patchAndFetchById(id, update)
   return result
 }
 
@@ -36,7 +36,7 @@ export async function updateIngredient(
  * Creates a new ingredient.
  */
 export async function createIngredient(ingredient): Promise<Ingredient> {
-  let result = await await Ingredient.query()
+  const result = await await Ingredient.query()
     .insert(ingredient)
     .returning('*')
 
@@ -50,7 +50,7 @@ export async function createIngredient(ingredient): Promise<Ingredient> {
 export async function deleteIngredient(
   ingredientId: string
 ): Promise<Ingredient> {
-  let result = await Ingredient.query()
+  const result = await Ingredient.query()
     .deleteById(ingredientId)
     .throwIfNotFound()
     .returning('*')

@@ -5,7 +5,7 @@ import { QueryBuilderYieldingOne, QueryBuilder } from 'objection'
  * Retrieves all recipes
  */
 export async function getAllRecipes(): Promise<Recipe[]> {
-  let result = await Recipe.query()
+  const result = await Recipe.query()
   return result
 }
 
@@ -13,7 +13,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
  * Retrieve an individual recipe by the recipe id
  */
 export async function getOneRecipe(id: string): Promise<Recipe> {
-  let result = await Recipe.query()
+  const result = await Recipe.query()
     .findById(id)
     .throwIfNotFound()
 
@@ -24,7 +24,7 @@ export async function getOneRecipe(id: string): Promise<Recipe> {
  * Creates a new recipe record
  */
 export async function createRecipe(recipe): Promise<Recipe> {
-  let result = await Recipe.query().insertAndFetch(recipe)
+  const result = await Recipe.query().insertAndFetch(recipe)
   return result
 }
 
@@ -32,7 +32,7 @@ export async function createRecipe(recipe): Promise<Recipe> {
  * Update an individual recipe
  */
 export async function updateRecipe(recipeId, update): Promise<Recipe> {
-  let result = await Recipe.query().patchAndFetchById(recipeId, update)
+  const result = await Recipe.query().patchAndFetchById(recipeId, update)
   return result
 }
 
@@ -40,7 +40,7 @@ export async function updateRecipe(recipeId, update): Promise<Recipe> {
  * Deletes the recipe with the given id
  */
 export async function deleteRecipe(recipeId): Promise<Recipe> {
-  let result = await Recipe.query()
+  const result = await Recipe.query()
     .deleteById(recipeId)
     .throwIfNotFound()
     .returning('*')

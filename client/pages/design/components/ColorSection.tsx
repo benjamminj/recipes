@@ -9,7 +9,7 @@ import { ColorsKey } from '../types'
 import { SectionHeading } from './SectionHeading'
 /** @jsx jsx */ jsx
 
-let Swatch = styled.div<{ inverted?: boolean; color: string }>(
+const Swatch = styled.div<{ inverted?: boolean; color: string }>(
   props => css`
     display: inline-flex;
     align-items: center;
@@ -23,12 +23,12 @@ let Swatch = styled.div<{ inverted?: boolean; color: string }>(
   `
 )
 
-let filterColorsByPrefix = (prefix: string) => {
-  let filtered: {
+const filterColorsByPrefix = (prefix: string) => {
+  const filtered: {
     [key in ColorsKey]?: string
   } = {}
 
-  for (let key in colors) {
+  for (const key in colors) {
     if (key.startsWith(prefix)) {
       filtered[key] = colors[key]
     }
@@ -37,19 +37,19 @@ let filterColorsByPrefix = (prefix: string) => {
   return filtered
 }
 
-let primary = filterColorsByPrefix('primary_')
-let neutral = filterColorsByPrefix('neutral_')
-let info = filterColorsByPrefix('info_')
-let warning = filterColorsByPrefix('warning_')
-let danger = filterColorsByPrefix('danger_')
-let success = filterColorsByPrefix('success_')
+const primary = filterColorsByPrefix('primary_')
+const neutral = filterColorsByPrefix('neutral_')
+const info = filterColorsByPrefix('info_')
+const warning = filterColorsByPrefix('warning_')
+const danger = filterColorsByPrefix('danger_')
+const success = filterColorsByPrefix('success_')
 
-let ColorGroup: FunctionComponent<{
+const ColorGroup: FunctionComponent<{
   shades: Partial<typeof colors>
   SectionHeading: string
   invertedShades?: ColorsKey[]
 }> = ({ shades, SectionHeading, invertedShades = [] }) => {
-  let styles = {
+  const styles = {
     h: css`
       font-size: ${fontSizes.m};
     `,
@@ -69,8 +69,8 @@ let ColorGroup: FunctionComponent<{
       <H css={styles.h}>{SectionHeading}</H>
       <div css={styles.swatchContainer}>
         {Object.entries(shades).map(([key, value]) => {
-          let [, label] = key.split('_')
-          let inverted = invertedShades.includes(key as keyof typeof colors)
+          const [, label] = key.split('_')
+          const inverted = invertedShades.includes(key as keyof typeof colors)
           return (
             <Swatch
               key={key}
@@ -87,7 +87,7 @@ let ColorGroup: FunctionComponent<{
   )
 }
 
-export let ColorSection = () => {
+export const ColorSection = () => {
   return (
     <div className="colorSection">
       <SectionHeading>Color</SectionHeading>

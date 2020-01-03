@@ -1,4 +1,4 @@
-export let colors = {
+export const colors = {
   // Primary
   primary_050: '#E0FCFF',
   primary_100: '#BEF8FD',

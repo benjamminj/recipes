@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core'
 import { SAMPLE_TEXT } from '../constants'
 /** @jsx jsx */ jsx
 
-export let TypographySection = () => {
+export const TypographySection = () => {
   return (
     <>
       <SectionHeading>Typography</SectionHeading>

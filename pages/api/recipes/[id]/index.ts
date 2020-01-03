@@ -5,23 +5,23 @@ import { Model } from 'objection'
 import { createControllerFunction } from '~/backend/createControllerFunction'
 import * as recipesService from '~/backend/services/recipe.service'
 
-let knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
+const knex = Knex({ ...connection, pool: { min: 1, max: 1 } })
 Model.knex(knex)
 
-let recipeByIdController = createControllerFunction(async (req, res) => {
-  let { method } = req
-  let { id } = req.query
+const recipeByIdController = createControllerFunction(async (req, res) => {
+  const { method } = req
+  const { id } = req.query
 
   switch (method) {
     case 'GET': {
-      let recipe = await recipesService.getOneRecipe(id)
+      const recipe = await recipesService.getOneRecipe(id)
 
       res.status(200).json({ data: recipe })
       break
     }
     case 'PATCH': {
-      let update = req.body
-      let updatedRecipe = await recipesService.updateRecipe(id, update)
+      const update = req.body
+      const updatedRecipe = await recipesService.updateRecipe(id, update)
       res.status(200).json({ data: updatedRecipe })
       break
     }
@@ -30,7 +30,7 @@ let recipeByIdController = createControllerFunction(async (req, res) => {
 
       // if no recipes were returned from the DELETE operation, throw a 404.
       if (deletedRecipe === undefined) {
-        let error = new Error()
+        const error = new Error()
 
         // @ts-ignore
         error.statusCode = 404

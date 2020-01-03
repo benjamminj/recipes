@@ -1,6 +1,6 @@
-let uuid = require('uuid/v4')
+const uuid = require('uuid/v4')
 
-let recipes = [
+const recipes = [
   {
     name: 'BLT',
     prepTime: 5,
@@ -108,8 +108,8 @@ exports.seed = async function(knex) {
   await knex('recipes').del()
 
   for (recipe of recipes) {
-    let recipeId = uuid()
-    let { ingredients, ...rest } = recipe
+    const recipeId = uuid()
+    const { ingredients, ...rest } = recipe
 
     await knex('recipes').insert({ ...rest, id: recipeId })
     await knex('ingredients').insert(
